@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgh5jmsy3ruvh"]
+
+[ext_resource type="Texture2D" uid="uid://dhpttmi6ekuyp" path="res://assets/pieces/squigglyleft.png" id="1_4mltc"]
+[ext_resource type="Script" path="res://scripts/Piece.gd" id="1_duwh5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txo1a"]
+size = Vector2(6, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sfkjp"]
+size = Vector2(6, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x4tuv"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gukyf"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40piv"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1yis"]
+size = Vector2(8, 7.99998)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dliop"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uplug"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4i1a"]
+size = Vector2(8, 8)
+
+[node name="squiggly_left" type="Node2D"]
+script = ExtResource("1_duwh5")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(8, -12)
+texture = ExtResource("1_4mltc")
+
+[node name="Body" type="Area2D" parent="."]
+position = Vector2(8, -12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(-4, 4)
+shape = SubResource("RectangleShape2D_txo1a")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+position = Vector2(4, -4)
+shape = SubResource("RectangleShape2D_sfkjp")
+
+[node name="CollisionCheck" type="Area2D" parent="."]
+position = Vector2(8, -12)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(-4, 16)
+shape = SubResource("RectangleShape2D_x4tuv")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(4, -16)
+shape = SubResource("RectangleShape2D_x4tuv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(-12, 4)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_gukyf")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(12, -4)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_gukyf")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(4, 8)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_40piv")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionCheck"]
+position = Vector2(-4, -8.00001)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_i1yis")
+
+[node name="CornerCollision" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(-4, 4)
+shape = SubResource("RectangleShape2D_dliop")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(-4, -20)
+shape = SubResource("RectangleShape2D_dliop")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(4, -28)
+shape = SubResource("RectangleShape2D_uplug")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(20, -28)
+shape = SubResource("RectangleShape2D_dliop")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(20, -4)
+shape = SubResource("RectangleShape2D_dliop")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CornerCollision"]
+position = Vector2(12, 4)
+shape = SubResource("RectangleShape2D_c4i1a")

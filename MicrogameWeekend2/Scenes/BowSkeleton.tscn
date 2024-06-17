@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dchxpqmc1oc66"]
+
+[ext_resource type="Script" path="res://Scripts/BowSkeleton.cs" id="1_1aac5"]
+
+[sub_resource type="Gradient" id="Gradient_kqqbs"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xv73c"]
+gradient = SubResource("Gradient_kqqbs")
+width = 16
+height = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psxei"]
+size = Vector2(16, 16)
+
+[node name="BowSkeleton" type="Area2D"]
+script = ExtResource("1_1aac5")
+MaxHealth = 2
+MaxStamina = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = SubResource("GradientTexture2D_xv73c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, -8)
+shape = SubResource("RectangleShape2D_psxei")
