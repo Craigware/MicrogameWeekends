@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://81icpq14tdb4"]
+
+[ext_resource type="Texture2D" uid="uid://nxppepcmxlyo" path="res://assets/bomb.png" id="1_balpo"]
+[ext_resource type="Script" path="res://scripts/Bomb.gd" id="1_ndnnv"]
+
+[node name="Bomb" type="Node2D"]
+script = ExtResource("1_ndnnv")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_balpo")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, -8)
+collide_with_areas = true
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="explode"]
