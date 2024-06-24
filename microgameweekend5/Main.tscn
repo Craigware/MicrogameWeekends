@@ -1,0 +1,211 @@
+[gd_scene load_steps=20 format=4 uid="uid://dcfcbmfx4grwl"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_ehmph"]
+[ext_resource type="Script" path="res://GameState.cs" id="1_mdupi"]
+[ext_resource type="Texture2D" uid="uid://dkob5ocjqtvwu" path="res://Sprites/player.png" id="2_7outy"]
+[ext_resource type="Texture2D" uid="uid://c8w48v8ka6f" path="res://Sprites/ground.png" id="4_we22t"]
+[ext_resource type="Script" path="res://Camera.cs" id="5_ajx1d"]
+[ext_resource type="Texture2D" uid="uid://y06b086mvfgb" path="res://Sprites/Fence.png" id="6_e7th1"]
+[ext_resource type="Script" path="res://Score.cs" id="7_ag8ui"]
+[ext_resource type="Texture2D" uid="uid://d12l57qmd7qe8" path="res://Sprites/BottomofScreen.png" id="7_enjxx"]
+[ext_resource type="PackedScene" uid="uid://cm0uiuy7fgoyl" path="res://Cow.tscn" id="9_ff0k3"]
+[ext_resource type="PackedScene" uid="uid://cviykbxusbni4" path="res://Strawberry.tscn" id="9_n1y2y"]
+[ext_resource type="Script" path="res://EntityStats.cs" id="10_u7rbg"]
+[ext_resource type="AudioStream" uid="uid://hs7s4c5dt0yt" path="res://Sounds/WAAAH1.wav" id="12_5h418"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtu14"]
+size = Vector2(11, 10)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xjedu"]
+texture = ExtResource("4_we22t")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -7.00191, 8, -7, 8, 6.875, -8, 6.875)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -7.00191, 8, -7, 8, 6.875, -8, 6.875)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -7.00191, 8, -7, 8, 6.875, -8, 6.875)
+
+[sub_resource type="TileSet" id="TileSet_23035"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_xjedu")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wm5dc"]
+texture = ExtResource("6_e7th1")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_robf5"]
+sources/0 = SubResource("TileSetAtlasSource_wm5dc")
+
+[sub_resource type="Resource" id="Resource_y771s"]
+script = ExtResource("10_u7rbg")
+Health = 10
+Age = 0
+Hunger = 10
+MaxHunger = 5
+
+[sub_resource type="Resource" id="Resource_mxh8h"]
+script = ExtResource("10_u7rbg")
+Health = 10
+Age = 0
+Hunger = 10
+MaxHunger = 5
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_mdupi")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(564, 410)
+script = ExtResource("1_ehmph")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_wtu14")
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_7outy")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Player"]
+position = Vector2(0, -19)
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+target_position = Vector2(14, 0)
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(561, 380)
+zoom = Vector2(4, 4)
+script = ExtResource("5_ajx1d")
+
+[node name="TileMapLayers" type="Node2D" parent="."]
+
+[node name="Platforms" type="TileMapLayer" parent="TileMapLayers"]
+tile_map_data = PackedByteArray("AAAhABoAAAABAAAAAAAiABoAAAABAAAAAAAjABoAAAABAAAAAAAkABoAAAABAAAAAAAlABoAAAABAAAAAAAgABoAAAABAAAAAAAfABoAAAABAAAAAAAmABoAAAABAAAAAAAnABoAAAABAAAAAAAoABoAAAACAAAAAAAeABoAAAAAAAAAAAArABUAAAABAAAAAAAsABUAAAABAAAAAAAtABUAAAABAAAAAAAuABUAAAABAAAAAAAvABUAAAABAAAAAAAwABUAAAABAAAAAAAqABUAAAAAAAAAAAAxABUAAAACAAAAAAAuABwAAAAAAAAAAAAvABwAAAABAAAAAAAwABwAAAABAAAAAAAxABwAAAABAAAAAAAyABwAAAABAAAAAAAzABwAAAABAAAAAAA0ABwAAAACAAAAAAAmABEAAAACAAAAAAAlABEAAAABAAAAAAAkABEAAAABAAAAAAAjABEAAAABAAAAAAAiABEAAAABAAAAAAAhABEAAAABAAAAAAAgABEAAAABAAAAAAAfABEAAAABAAAAAAAeABEAAAABAAAAAAAdABEAAAAAAAAAAAAZABQAAAAAAAAAAAAaABQAAAACAAAAAAAaABkAAAABAAAAAAAZABkAAAABAAAAAAAYABkAAAABAAAAAAAXABkAAAABAAAAAAAWABkAAAABAAAAAAAVABkAAAABAAAAAAAbABkAAAACAAAAAAAUABkAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_23035")
+
+[node name="Fences" type="TileMapLayer" parent="TileMapLayers"]
+z_index = -1
+tile_map_data = PackedByteArray("AAAeABkAAAAAAAAAAAAfABkAAAAAAAAAAAAgABkAAAAAAAAAAAAiABkAAAAAAAAAAAAjABkAAAAAAAAAAAAkABkAAAAAAAAAAAAmABkAAAAAAAAAAAAnABkAAAAAAAAAAAAoABkAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_robf5")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score - "
+script = ExtResource("7_ag8ui")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/Control"]
+offset_left = 1094.0
+offset_top = 6.0
+offset_right = 1271.0
+offset_bottom = 25.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Press E to Pickup Guys"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="UI/Control"]
+offset_left = 1094.0
+offset_top = 22.0
+offset_right = 1271.0
+offset_bottom = 41.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Press Q to Plant Guys"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="UI/Control"]
+offset_left = 1086.0
+offset_top = 42.0
+offset_right = 1285.0
+offset_bottom = 80.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Feed Guys Plant Guys To Earn Points"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="UI/Control"]
+offset_left = 1081.0
+offset_top = 82.0
+offset_right = 1280.0
+offset_bottom = 120.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]Thank You StarZy For The Sound Effects"
+
+[node name="Strawberry" parent="." instance=ExtResource("9_n1y2y")]
+position = Vector2(535, 409)
+
+[node name="Strawberry2" parent="." instance=ExtResource("9_n1y2y")]
+position = Vector2(587, 408)
+
+[node name="Node2D" parent="." instance=ExtResource("9_ff0k3")]
+position = Vector2(518, 406)
+Stats = SubResource("Resource_y771s")
+
+[node name="Node2D2" parent="." instance=ExtResource("9_ff0k3")]
+position = Vector2(632, 407)
+Stats = SubResource("Resource_mxh8h")
+
+[node name="Node2D4" parent="." instance=ExtResource("9_ff0k3")]
+position = Vector2(586, 407)
+Stats = SubResource("Resource_mxh8h")
+
+[node name="Node2D3" type="Node2D" parent="."]
+
+[node name="BottomofScreen" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(465, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen2" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(593, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen3" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(721, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen4" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(849, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen5" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(977, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen6" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(1105, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen7" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(81, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen8" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(209, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="BottomofScreen9" type="Sprite2D" parent="Node2D3"]
+z_index = -10
+position = Vector2(337, 438)
+texture = ExtResource("7_enjxx")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_5h418")
