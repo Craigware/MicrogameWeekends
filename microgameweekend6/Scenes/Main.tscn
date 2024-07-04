@@ -1,0 +1,444 @@
+[gd_scene load_steps=23 format=3 uid="uid://b0odxa6m0cljw"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_mww6e"]
+[ext_resource type="Texture2D" uid="uid://cvg0dc0dvy1nb" path="res://Assets/grass.png" id="2_jixad"]
+[ext_resource type="PackedScene" uid="uid://c0q1evl80y3mf" path="res://Scenes/Crate.tscn" id="2_m5ba7"]
+[ext_resource type="Script" path="res://Scripts/Hud.cs" id="2_p0g56"]
+[ext_resource type="Script" path="res://Scripts/Sun.cs" id="2_q6wlv"]
+[ext_resource type="Texture2D" uid="uid://kieehjp2fokm" path="res://Assets/Bullseye.png" id="3_sn77h"]
+[ext_resource type="PackedScene" uid="uid://ucvbtgoh2q6y" path="res://Scenes/Fly.tscn" id="6_gd8l5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_plgdi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_caii2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_getuu"]
+albedo_color = Color(0.744392, 0.616971, 0.616971, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b3132"]
+material = SubResource("StandardMaterial3D_getuu")
+size = Vector3(0.15, 0.15, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7o12j"]
+albedo_texture = ExtResource("2_jixad")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_py0u5"]
+material = SubResource("StandardMaterial3D_7o12j")
+size = Vector3(200, 1, 200)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pnckd"]
+data = PackedVector3Array(100, 0, 100, -100, 0, 100, 100, 0, -100, -100, 0, 100, -100, 0, -100, 100, 0, -100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1b4v"]
+albedo_color = Color(0.785124, 0.361582, 0.361582, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5lp8n"]
+material = SubResource("StandardMaterial3D_l1b4v")
+size = Vector3(10, 10, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o6hje"]
+data = PackedVector3Array(-5, 5, 5, 5, 5, 5, -5, -5, 5, 5, 5, 5, 5, -5, 5, -5, -5, 5, 5, 5, -5, -5, 5, -5, 5, -5, -5, -5, 5, -5, -5, -5, -5, 5, -5, -5, 5, 5, 5, 5, 5, -5, 5, -5, 5, 5, 5, -5, 5, -5, -5, 5, -5, 5, -5, 5, -5, -5, 5, 5, -5, -5, -5, -5, 5, 5, -5, -5, 5, -5, -5, -5, 5, 5, 5, -5, 5, 5, 5, 5, -5, -5, 5, 5, -5, 5, -5, 5, 5, -5, -5, -5, 5, 5, -5, 5, -5, -5, -5, 5, -5, 5, 5, -5, -5, -5, -5, -5)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_wvml4"]
+
+[sub_resource type="Sky" id="Sky_7byfc"]
+sky_material = SubResource("PhysicalSkyMaterial_wvml4")
+
+[sub_resource type="Environment" id="Environment_w4xy8"]
+background_mode = 2
+sky = SubResource("Sky_7byfc")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 3
+ssr_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.527373, 0.62497, 0.778335, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7i5x7"]
+bg_color = Color(0.866588, 0.216727, 0.216727, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73dvs"]
+bg_color = Color(0.39777, 0.778335, 0.343099, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.65173, 0)
+collision_layer = 2
+script = ExtResource("1_mww6e")
+CameraRotationSpeed = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_plgdi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_caii2")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.431637, 0)
+
+[node name="Gun" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.468326, 0.145808, 0.627209)
+mesh = SubResource("BoxMesh_b3132")
+
+[node name="World" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.14284, 0)
+shadow_enabled = true
+script = ExtResource("2_q6wlv")
+
+[node name="Floor" type="StaticBody3D" parent="World"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.396427, 0)
+mesh = SubResource("BoxMesh_py0u5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Floor"]
+shape = SubResource("ConcavePolygonShape3D_pnckd")
+
+[node name="Decals" type="Node" parent="World"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="World"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3, 7)
+mesh = SubResource("BoxMesh_5lp8n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3, 7)
+shape = SubResource("ConcavePolygonShape3D_o6hje")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_w4xy8")
+
+[node name="Decoration" type="Node" parent="World"]
+
+[node name="Crate" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 11)
+
+[node name="Crate2" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+
+[node name="Crate3" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 4, 1, 5)
+
+[node name="Crate5" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 4, 1, 8.60805)
+
+[node name="Crate6" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 7.47517, 1, 8.60805)
+
+[node name="Crate7" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 7.47517, 3.48704, 8.60805)
+
+[node name="Crate8" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 7.47517, 39.487, 8.60805)
+
+[node name="Crate9" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.40491, 39.487, 8.60805)
+
+[node name="Crate10" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.40491, 39.487, -1.5743)
+
+[node name="Crate11" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 2.59509, 39.487, -1.5743)
+
+[node name="Crate12" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 2.59509, 39.487, 10.4257)
+
+[node name="Crate13" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 2.59509, 47.6572, 10.4257)
+
+[node name="Crate14" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -18.7551, 47.6572, 10.4257)
+
+[node name="Crate15" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -18.7551, 47.6572, 24.5089)
+
+[node name="Crate16" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -18.7551, 47.6572, -6.94838)
+
+[node name="Crate17" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -5.75508, 47.6572, -6.94838)
+
+[node name="Crate4" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 4, 8.09945, 5.6649)
+
+[node name="Crate18" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -37.3724, 32.6756, 11.477)
+
+[node name="Crate19" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -40.8836, 32.6756, 12.3077)
+
+[node name="Crate20" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -40.0835, 32.6756, 15.6895)
+
+[node name="Crate21" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -40.0835, 35.1627, 15.6895)
+
+[node name="Crate22" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -40.0835, 71.1627, 15.6895)
+
+[node name="Crate23" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -42.3582, 71.1627, 6.07484)
+
+[node name="Crate24" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -32.4494, 71.1627, 3.73049)
+
+[node name="Crate25" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -31.2982, 71.1627, 8.59617)
+
+[node name="Crate26" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -42.9758, 71.1627, 11.359)
+
+[node name="Crate27" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -42.9758, 79.3329, 11.359)
+
+[node name="Crate28" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -47.8914, 79.3329, -9.41758)
+
+[node name="Crate29" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -61.5963, 79.3329, -6.17512)
+
+[node name="Crate30" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -30.9841, 79.3329, -13.4177)
+
+[node name="Crate31" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -27.991, 79.3329, -0.766978)
+
+[node name="Crate32" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(-0.525308, 0, -0.850912, 0, 1, 0, 0.850912, 0, -0.525308, -38.0195, 39.7751, 11.6301)
+
+[node name="Crate33" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 27.2999, 32.6756, 32.8318)
+
+[node name="Crate34" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 25.229, 32.6756, 35.7864)
+
+[node name="Crate35" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 32.6756, 37.781)
+
+[node name="Crate36" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 35.1627, 37.781)
+
+[node name="Crate37" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 71.1627, 37.781)
+
+[node name="Crate38" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 19.9841, 71.1627, 32.1103)
+
+[node name="Crate39" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 25.8282, 71.1627, 23.7721)
+
+[node name="Crate40" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 29.9227, 71.1627, 26.6418)
+
+[node name="Crate41" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 23.0353, 71.1627, 36.4685)
+
+[node name="Crate42" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 23.0353, 79.3329, 36.4685)
+
+[node name="Crate43" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 5.55185, 79.3329, 24.2146)
+
+[node name="Crate44" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -2.53117, 79.3329, 35.7472)
+
+[node name="Crate45" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 15.5237, 79.3329, 9.98712)
+
+[node name="Crate46" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 26.1693, 79.3329, 17.4485)
+
+[node name="Crate47" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 26.9182, 39.7751, 33.3763)
+
+[node name="Crate48" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 27.2999, 32.6756, -31.5767)
+
+[node name="Crate49" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 25.229, 32.6756, -28.6221)
+
+[node name="Crate50" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 32.6756, -26.6275)
+
+[node name="Crate51" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 35.1627, -26.6275)
+
+[node name="Crate52" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 28.0748, 71.1627, -26.6275)
+
+[node name="Crate53" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 19.9841, 71.1627, -32.2982)
+
+[node name="Crate54" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 25.8282, 71.1627, -40.6364)
+
+[node name="Crate55" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 29.9227, 71.1627, -37.7667)
+
+[node name="Crate56" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 23.0353, 71.1627, -27.94)
+
+[node name="Crate57" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 23.0353, 79.3329, -27.94)
+
+[node name="Crate58" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 5.55185, 79.3329, -40.1939)
+
+[node name="Crate59" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -2.53117, 79.3329, -28.6613)
+
+[node name="Crate60" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 15.5237, 79.3329, -54.4214)
+
+[node name="Crate61" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 26.1693, 79.3329, -46.96)
+
+[node name="Crate62" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, 26.9182, 39.7751, -31.0322)
+
+[node name="Crate63" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -55.0653, 32.6756, -31.5767)
+
+[node name="Crate64" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -57.1362, 32.6756, -28.6221)
+
+[node name="Crate65" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -54.2904, 32.6756, -26.6275)
+
+[node name="Crate66" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -54.2904, 35.1627, -26.6275)
+
+[node name="Crate67" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -54.2904, 71.1627, -26.6275)
+
+[node name="Crate68" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -62.3811, 71.1627, -32.2982)
+
+[node name="Crate69" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -56.5369, 71.1627, -40.6364)
+
+[node name="Crate70" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -52.4425, 71.1627, -37.7667)
+
+[node name="Crate71" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -59.3299, 71.1627, -27.94)
+
+[node name="Crate72" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -59.3299, 79.3329, -27.94)
+
+[node name="Crate73" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -76.8133, 79.3329, -40.1939)
+
+[node name="Crate74" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -84.8964, 79.3329, -28.6613)
+
+[node name="Crate75" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -66.8415, 79.3329, -54.4214)
+
+[node name="Crate76" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -56.1959, 79.3329, -46.96)
+
+[node name="Crate77" parent="World/Decoration" instance=ExtResource("2_m5ba7")]
+transform = Transform3D(0.173201, 0, -0.984886, 0, 1, 0, 0.984886, 0, 0.173201, -55.4469, 39.7751, -31.0322)
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_p0g56")
+
+[node name="Cursor" type="TextureRect" parent="HUD"]
+modulate = Color(1, 0.618377, 0.618377, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.05
+anchor_bottom = 0.089
+offset_right = 192.0
+offset_bottom = 191.92
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_sn77h")
+
+[node name="Bars" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Bars"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Health" type="ProgressBar" parent="HUD/Bars/VBox"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_7i5x7")
+value = 100.0
+show_percentage = false
+
+[node name="Ammo" type="ProgressBar" parent="HUD/Bars/VBox"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_73dvs")
+value = 100.0
+show_percentage = false
+
+[node name="FPS" type="RichTextLabel" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 40.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = "[center]FPS"
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Enemy" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.684511, 0, 7.32863)
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 2
+texture = ExtResource("3_sn77h")
+
+[node name="Fly" parent="." instance=ExtResource("6_gd8l5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.85628, 2.03344)

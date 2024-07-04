@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0q1evl80y3mf"]
+
+[ext_resource type="Script" path="res://Scripts/Breakable.cs" id="1_k0miq"]
+[ext_resource type="Texture2D" uid="uid://c257h3jxwwvr0" path="res://Assets/Crate.png" id="2_o7py7"]
+[ext_resource type="Texture2D" uid="uid://hp0jrq4cppwy" path="res://Assets/CrateBump.png" id="3_ytkds"]
+[ext_resource type="Texture2D" uid="uid://rqsmcw3dncj5" path="res://Assets/CrateNormal.png" id="4_va2i0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yv51t"]
+bounce = 0.42
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_juopm"]
+albedo_texture = ExtResource("2_o7py7")
+normal_enabled = true
+normal_texture = ExtResource("4_va2i0")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_ytkds")
+uv1_triplanar = true
+uv2_scale = Vector3(2, 2, 2)
+uv2_offset = Vector3(1, 1, 1)
+uv2_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_f8f57"]
+lightmap_size_hint = Vector2i(24, 36)
+material = SubResource("StandardMaterial3D_juopm")
+add_uv2 = true
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ov8u"]
+size = Vector3(2, 2, 2)
+
+[node name="Crate" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_yv51t")
+can_sleep = false
+script = ExtResource("1_k0miq")
+maxHealth = 3
+RespawnTime = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+gi_mode = 2
+mesh = SubResource("BoxMesh_f8f57")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3ov8u")
